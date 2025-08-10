@@ -11,8 +11,16 @@
       "destination": "/api/register.js"
     },
     {
+      "source": "/api/auth/me",
+      "destination": "/api/auth/me.js"
+    },
+    {
       "source": "/api/events",
       "destination": "/api/events.js"
+    },
+    {
+      "source": "/api/analytics",
+      "destination": "/api/analytics.js"
     },
     {
       "source": "/api/users/profile",
