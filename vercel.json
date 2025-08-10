@@ -11,6 +11,14 @@
       "destination": "/api/register.js"
     },
     {
+      "source": "/api/events",
+      "destination": "/api/events.js"
+    },
+    {
+      "source": "/api/users/profile",
+      "destination": "/api/users/profile.js"
+    },
+    {
       "source": "/api/test",
       "destination": "/api/test.js"
     },
