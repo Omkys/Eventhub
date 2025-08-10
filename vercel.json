@@ -19,8 +19,16 @@
       "destination": "/api/auth/me.js"
     },
     {
+      "source": "/api/events/([^/]+)/register",
+      "destination": "/api/events/[id]/register.js"
+    },
+    {
       "source": "/api/events/([^/]+)/feedback",
       "destination": "/api/events/[id]/feedback.js"
+    },
+    {
+      "source": "/api/events/([^/]+)",
+      "destination": "/api/events/[id].js"
     },
     {
       "source": "/api/events",
