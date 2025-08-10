@@ -2,7 +2,7 @@ import axios from 'axios';
 import { AuthResponse, Event, User, Analytics, EventFeedback, AppNotification } from '../types';
 
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://your-railway-backend-url.railway.app/api' 
+  ? '/api' 
   : 'http://localhost:5001/api';
 
 const api = axios.create({
@@ -25,7 +25,7 @@ api.interceptors.response.use(
       if (refreshToken) {
         try {
           const refreshUrl = process.env.NODE_ENV === 'production' 
-            ? 'https://your-railway-backend-url.railway.app/api/auth/refresh' 
+            ? '/api/auth/refresh' 
             : 'http://localhost:5001/api/auth/refresh';
           const response = await axios.post(refreshUrl, {
             refreshToken,
