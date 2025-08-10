@@ -1,4 +1,4 @@
-// Mock events storage (shared with events.js)
+// Consolidated events management endpoint
 let mockEvents = [
   {
     _id: '1',
@@ -46,7 +46,7 @@ let mockEvents = [
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
   if (req.method === 'OPTIONS') {
@@ -54,16 +54,48 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { id } = req.query;
+  const { action, id } = req.query;
 
-  if (req.method === 'GET') {
+  if (req.method === 'GET' && !action) {
+    // Get all events
+    res.json(mockEvents);
+  } else if (req.method === 'GET' && action === 'single' && id) {
     // Get single event
     const event = mockEvents.find(e => e._id === id);
     if (!event) {
       return res.status(404).json({ message: 'Event not found' });
     }
     res.json(event);
-  } else if (req.method === 'PUT') {
+  } else if (req.method === 'POST' && !action) {
+    // Create event
+    try {
+      const { title, description, date, location, category, department, year, maxParticipants } = req.body;
+      
+      if (!title || !description || !date || !location) {
+        return res.status(400).json({ message: 'Missing required fields' });
+      }
+      
+      const newEvent = {
+        _id: Date.now().toString(),
+        title,
+        description,
+        date,
+        location,
+        category: category || 'General',
+        department: department || 'All',
+        year: year || '2024',
+        maxParticipants: maxParticipants || 100,
+        registeredCount: 0,
+        createdBy: 'Admin User',
+        status: 'upcoming'
+      };
+      
+      mockEvents.push(newEvent);
+      res.status(201).json({ message: 'Event created successfully', event: newEvent });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  } else if (req.method === 'PUT' && id) {
     // Update event
     try {
       const { title, description, date, location, category, department, year, maxParticipants } = req.body;
@@ -89,7 +121,7 @@ module.exports = async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: 'Server error' });
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method === 'DELETE' && id) {
     // Delete event
     const eventIndex = mockEvents.findIndex(e => e._id === id);
     if (eventIndex === -1) {
@@ -98,6 +130,18 @@ module.exports = async (req, res) => {
     
     mockEvents.splice(eventIndex, 1);
     res.json({ message: 'Event deleted successfully' });
+  } else if (req.method === 'POST' && action === 'register' && id) {
+    // Register for event
+    res.json({ message: 'Registered successfully' });
+  } else if (req.method === 'DELETE' && action === 'register' && id) {
+    // Cancel registration
+    res.json({ message: 'Registration cancelled successfully' });
+  } else if (req.method === 'GET' && action === 'feedback' && id) {
+    // Get feedback
+    res.json([]);
+  } else if (req.method === 'POST' && action === 'feedback' && id) {
+    // Submit feedback
+    res.json({ message: 'Feedback submitted successfully' });
   } else {
     res.status(405).json({ message: 'Method not allowed' });
   }

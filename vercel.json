@@ -19,20 +19,8 @@
       "destination": "/api/auth/me.js"
     },
     {
-      "source": "/api/events/([^/]+)/register",
-      "destination": "/api/events/[id]/register.js"
-    },
-    {
-      "source": "/api/events/([^/]+)/feedback",
-      "destination": "/api/events/[id]/feedback.js"
-    },
-    {
-      "source": "/api/events/([^/]+)",
-      "destination": "/api/events/[id].js"
-    },
-    {
-      "source": "/api/events",
-      "destination": "/api/events.js"
+      "source": "/api/events/(.*)",
+      "destination": "/api/events-management.js"
     },
     {
       "source": "/api/analytics",
@@ -41,10 +29,6 @@
     {
       "source": "/api/users/profile",
       "destination": "/api/users/profile.js"
-    },
-    {
-      "source": "/api/test",
-      "destination": "/api/test.js"
     },
     {
       "source": "/(.*)",
