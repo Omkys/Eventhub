@@ -3,17 +3,22 @@
 ## 🚀 Current Deployment Status
 
 ✅ **Frontend**: Deployed on Vercel  
-❌ **Backend**: Requires database setup  
-❌ **Database**: Not configured  
+✅ **Backend**: Configured for Vercel  
+❌ **Database**: Requires MongoDB Atlas setup  
 
 ## 📋 Required Environment Variables
 
 ### For Vercel Dashboard:
 ```
-MONGODB_URI=your_mongodb_connection_string_here
-JWT_SECRET=your_super_secret_jwt_key_here
-JWT_REFRESH_SECRET=your_refresh_secret_key_here
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/eventhub
+JWT_SECRET=your_32_character_secure_random_string
+JWT_REFRESH_SECRET=another_32_character_secure_random_string
 NODE_ENV=production
+```
+
+### Generate JWT Secrets:
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
 ## 🗄️ Database Setup Options
