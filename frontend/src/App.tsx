@@ -24,7 +24,7 @@ const AppRoutes: React.FC = () => {
     <Routes>
       <Route 
         path="/" 
-        element={user ? <Navigate to="/events" replace /> : <Landing />} 
+        element={<Landing />} 
       />
       <Route 
         path="/login" 

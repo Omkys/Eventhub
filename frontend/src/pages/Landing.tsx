@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Users, Star, ArrowRight, CheckCircle, Mail, Phone, MapPin, Github, Twitter, Linkedin } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Landing: React.FC = () => {
+  const { user } = useAuth();
   const [currentStat, setCurrentStat] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   
@@ -62,12 +64,20 @@ const Landing: React.FC = () => {
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">EventHub</span>
             </div>
             <div className="space-x-4">
-              <Link to="/login" className="btn-secondary hover:scale-105 transition-transform duration-200">
-                Login
-              </Link>
-              <Link to="/register" className="btn-primary hover:scale-105 transition-transform duration-200 animate-pulse-glow">
-                Get Started
-              </Link>
+              {user ? (
+                <Link to="/events" className="btn-primary hover:scale-105 transition-transform duration-200">
+                  Go to Events
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login" className="btn-secondary hover:scale-105 transition-transform duration-200">
+                    Login
+                  </Link>
+                  <Link to="/register" className="btn-primary hover:scale-105 transition-transform duration-200 animate-pulse-glow">
+                    Get Started
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </header>
@@ -109,19 +119,31 @@ const Landing: React.FC = () => {
           </div>
           
           <div className="space-x-4">
-            <Link 
-              to="/register" 
-              className="btn-primary text-lg px-8 py-4 hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 group"
-            >
-              Join Now 
-              <ArrowRight className="w-5 h-5 ml-2 inline group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
-            <Link 
-              to="/login" 
-              className="btn-secondary text-lg px-8 py-4 hover:scale-105 transition-all duration-300"
-            >
-              Sign In
-            </Link>
+            {user ? (
+              <Link 
+                to="/events" 
+                className="btn-primary text-lg px-8 py-4 hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 group"
+              >
+                View Events 
+                <ArrowRight className="w-5 h-5 ml-2 inline group-hover:translate-x-1 transition-transform duration-300" />
+              </Link>
+            ) : (
+              <>
+                <Link 
+                  to="/register" 
+                  className="btn-primary text-lg px-8 py-4 hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 group"
+                >
+                  Join Now 
+                  <ArrowRight className="w-5 h-5 ml-2 inline group-hover:translate-x-1 transition-transform duration-300" />
+                </Link>
+                <Link 
+                  to="/login" 
+                  className="btn-secondary text-lg px-8 py-4 hover:scale-105 transition-all duration-300"
+                >
+                  Sign In
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
